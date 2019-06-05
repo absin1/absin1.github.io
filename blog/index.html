@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="utf-8">
+  
+
+  
+  <title>Musings</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta property="og:type" content="website">
+<meta property="og:title" content="Musings">
+<meta property="og:url" content="https://absin1.github.io/index.html">
+<meta property="og:site_name" content="Musings">
+<meta property="og:locale" content="default">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Musings">
+  
+    <link rel="alternate" href="/blog/atom.xml" title="Musings" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/blog/css/style.css">
+</head>
+</html>
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/blog/" id="logo">Musings</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/blog/">Home</a>
+        
+          <a class="main-nav-link" href="/blog/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/blog/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="https://absin1.github.io"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main">
+  
+    <article id="post-hello-world" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/blog/2019/06/06/hello-world/" class="article-date">
+  <time datetime="2019-06-05T19:17:01.404Z" itemprop="datePublished">2019-06-06</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/blog/2019/06/06/hello-world/">Software Architecture</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>This is a small essay on Software Architecture.<br>I try to think of software architecture as things that are difficult to change later on. I won’t even attempt to recall a formal definition and would most certainly not be obliged to either. Its interesting to note that an ‘architect’ is someone who has been labelled so by the company they work with and might not have anything to do with real software architecture. At the same time the process that is followed while making software architecture may not necessarily only be followed by an architect or whoever the company decides to call that.</p>
+<h2 id="Omnipresence"><a href="#Omnipresence" class="headerlink" title="Omnipresence"></a>Omnipresence</h2><p>The first thing we have to appreciate is that all softwares have architecture just like all houses do; be it an apartment, a shanty, a bunglow. Architecture is an inherent characteristic of any software be it a POC, or a beta, or a production ready application. It doesn’t matter if there was an ‘architect’ involved or not there is always going to be an architecture. </p>
+<h2 id="Implicit-architecture"><a href="#Implicit-architecture" class="headerlink" title="Implicit architecture"></a>Implicit architecture</h2><p>A lot of times while laying down applications between a handful or even less engineers, the process of architecture can become quite informal. Much like building a bridge can be done without putting in any pre-thought softwares can also be built on the fly. The bridge comparison does throw a light on the overall sanity of such systems though. It is almost never a good idea to proceed like this; however a bunch of civil engineers can come together to build a small bypass in a matter of weeks without having put a lot of dedicated pre-thought into how the things will exavtly pan out; and they can do this because, well because they have made bridges before. Would I be able to make a bridge like that?</p>
+<h2 id="Choices"><a href="#Choices" class="headerlink" title="Choices"></a>Choices</h2><p>Software architecture is a lot about finding difficult choices early on and making functionally and situationally permissive ones. This can seem trivial but having made this choice early on ensures that an imaginative enquiry has been made to the proceedings that might follow in either scenarios ensuring possibility to make other considerations that could have otherwise been completely overlooked, until faced otherwise well into the development phase.</p>
+<h2 id="Alienation"><a href="#Alienation" class="headerlink" title="Alienation"></a>Alienation</h2><p>Software Architecture is also about alienating yourself away from the exact deliverable which in this case happens to be code. This ensures that you have traversed the whole process from requirement gathering to the exact deliverable to a very fine granularity without having to first do it. While this may seem imaginatively and analytically daunting it paves the way for a very non-dependent scenario where the ownership transfer can be attained quite smoothly using the same thought deliverables that you made for yourself! This may not be of as much interest to you as a developer as it would be to your employer.</p>
+<h2 id="Architectural-Patterns"><a href="#Architectural-Patterns" class="headerlink" title="Architectural Patterns"></a>Architectural Patterns</h2><p>Common architectural patterns like Peer2Peer, Master-Slave, Client-Server, Blackboard all of which have been multiple implementations with very open licences to enhance your toolkit as an engineer. You can easily employ these patterns to handle problems in both your functional and sanity space. Having an understanding of these patterns can help any developer find an appropriate solutions to even newer problems. For example in a traditional ASR architecture there will most commonly be a WFST based model whose robustness can be applied to other related problems like language modelling or conversational decision trees.</p>
+<h2 id="Design-Patterns"><a href="#Design-Patterns" class="headerlink" title="Design Patterns"></a>Design Patterns</h2><p>Unlike architectual patters enriching your toolkit, using common design patterns while implementing solutions to common problems like UI state management (MVC), makes it easy for other developers to constructively collaborate. It makes for most of the code sticking to a certain format which is also commonly seen ‘in the wild’. While making codebases robust you will also get a lot better readability if you can apply these patterns to your problem space.</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://absin1.github.io/2019/06/06/hello-world/" data-id="cjwjln1ih00007xcxdpaksrip" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+
+  
+    
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/blog/archives/2019/06/">June 2019</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/blog/2019/06/06/hello-world/">Software Architecture</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2019 absin<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/blog/" class="mobile-nav-link">Home</a>
+  
+    <a href="/blog/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/blog/fancybox/jquery.fancybox.css">
+  <script src="/blog/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/blog/js/script.js"></script>
+
+
+
+  </div>
+</body>
+</html>
