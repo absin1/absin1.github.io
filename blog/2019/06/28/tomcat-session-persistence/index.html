@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="utf-8">
+  
+
+  
+  <title>Tomcat Session Persistence | Musings</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="Session persistence is an interesting feature in Apache Tomcat. Using this we can potentially have multiple instances of tomcat running on different physical machines and they can share the sessions a">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Tomcat Session Persistence">
+<meta property="og:url" content="https://absin1.github.io/2019/06/28/tomcat-session-persistence/index.html">
+<meta property="og:site_name" content="Musings">
+<meta property="og:description" content="Session persistence is an interesting feature in Apache Tomcat. Using this we can potentially have multiple instances of tomcat running on different physical machines and they can share the sessions a">
+<meta property="og:locale" content="default">
+<meta property="og:updated_time" content="2019-06-24T16:47:17.285Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Tomcat Session Persistence">
+<meta name="twitter:description" content="Session persistence is an interesting feature in Apache Tomcat. Using this we can potentially have multiple instances of tomcat running on different physical machines and they can share the sessions a">
+  
+    <link rel="alternate" href="/blog/atom.xml" title="Musings" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/blog/css/style.css">
+</head>
+</html>
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/blog/" id="logo">Musings</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/blog/">Home</a>
+        
+          <a class="main-nav-link" href="/blog/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/blog/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="https://absin1.github.io"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-tomcat-session-persistence" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/blog/2019/06/28/tomcat-session-persistence/" class="article-date">
+  <time datetime="2019-06-28T16:17:01.000Z" itemprop="datePublished">2019-06-28</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      Tomcat Session Persistence
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>Session persistence is an interesting feature in Apache Tomcat. Using this we can potentially have multiple instances of tomcat running on different physical machines and they can share the sessions across the running instances, potentially providing capability for a user’s request to be juggled between different instances of Tomcat yet maintaining session dependent contextuality.<br>Let’s see how we can do this using Postgres DB as a store of sessions. We need a table where the different instances of Tomcat can store and synchronize session related information.</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">CREATE TABLE tomcat_sessions</span><br><span class="line">(</span><br><span class="line">  session_id character varying(100) NOT NULL,</span><br><span class="line">  valid_session character(1) NOT NULL,</span><br><span class="line">  max_inactive integer NOT NULL,</span><br><span class="line">  last_access bigint NOT NULL,</span><br><span class="line">  app_name character varying(255),</span><br><span class="line">  session_data bytea,</span><br><span class="line">  CONSTRAINT tomcat_sessions_pkey PRIMARY KEY (session_id)</span><br><span class="line">);</span><br></pre></td></tr></table></figure>
+<p>Because we want this to be accessed fast by the name of application let’s index it. </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">CREATE INDEX app_name_index</span><br><span class="line">  ON tomcat_sessions</span><br><span class="line">  USING btree</span><br><span class="line">  (app_name);</span><br></pre></td></tr></table></figure>
+<p>Okay so now we have a place where we can store the session related information, let’s tell our tomcat instances about this.<br>Find the <code>$tomcat-root/conf/context.xml</code>, the <code>Manager</code> is by default commented out so that tomcat does the persistence of sessions on disk by default. Add this:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">&lt;Manager className=&quot;org.apache.catalina.session.PersistentManager&quot; processExpiresFrequency=&quot;3&quot; maxIdleBackup=&quot;1&quot; &gt;</span><br><span class="line">        &lt;Store className=&quot;org.apache.catalina.session.JDBCStore&quot;</span><br><span class="line">        	driverName=&quot;org.postgresql.Driver&quot;</span><br><span class="line">	        connectionURL=&quot;jdbc:postgresql://localhost:5432/websessions&quot;</span><br><span class="line">        	connectionName=&quot;postgres&quot; connectionPassword=&quot;root&quot;</span><br><span class="line">	        sessionAppCol=&quot;app_name&quot; sessionDataCol=&quot;session_data&quot; sessionIdCol=&quot;session_id&quot;</span><br><span class="line">        	sessionLastAccessedCol=&quot;last_access&quot; sessionMaxInactiveCol=&quot;max_inactive&quot;</span><br><span class="line">		sessionTable=&quot;tomcat_sessions&quot; sessionValidCol=&quot;valid_session&quot; /&gt;</span><br><span class="line">&lt;/Manager&gt;</span><br></pre></td></tr></table></figure>
+<p>Now because we are using PostgreSQL we need to add the JDBC libary to the <code>$tomcat-root/lib</code> folder.<br>Once we do that we are done.</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://absin1.github.io/2019/06/28/tomcat-session-persistence/" data-id="cjxalysmq0002aitnv5mujwf0" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+  
+    <a href="/blog/2019/06/24/apache2setup/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">Apache as a Load Balancer</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+
+  
+    
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/blog/archives/2019/06/">June 2019</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/blog/2019/06/28/tomcat-session-persistence/">Tomcat Session Persistence</a>
+          </li>
+        
+          <li>
+            <a href="/blog/2019/06/24/apache2setup/">Apache as a Load Balancer</a>
+          </li>
+        
+          <li>
+            <a href="/blog/2019/06/14/feature-development-methodology/">Feature Development Methodology</a>
+          </li>
+        
+          <li>
+            <a href="/blog/2019/06/05/software-architecture/">Software Architecture</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2019 absin<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/blog/" class="mobile-nav-link">Home</a>
+  
+    <a href="/blog/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/blog/fancybox/jquery.fancybox.css">
+  <script src="/blog/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/blog/js/script.js"></script>
+
+
+
+  </div>
+</body>
+</html>

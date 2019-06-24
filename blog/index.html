@@ -62,6 +62,49 @@
       <div class="outer">
         <section id="main">
   
+    <article id="post-tomcat-session-persistence" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/blog/2019/06/28/tomcat-session-persistence/" class="article-date">
+  <time datetime="2019-06-28T16:17:01.000Z" itemprop="datePublished">2019-06-28</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/blog/2019/06/28/tomcat-session-persistence/">Tomcat Session Persistence</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>Session persistence is an interesting feature in Apache Tomcat. Using this we can potentially have multiple instances of tomcat running on different physical machines and they can share the sessions across the running instances, potentially providing capability for a user’s request to be juggled between different instances of Tomcat yet maintaining session dependent contextuality.<br>Let’s see how we can do this using Postgres DB as a store of sessions. We need a table where the different instances of Tomcat can store and synchronize session related information.</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">CREATE TABLE tomcat_sessions</span><br><span class="line">(</span><br><span class="line">  session_id character varying(100) NOT NULL,</span><br><span class="line">  valid_session character(1) NOT NULL,</span><br><span class="line">  max_inactive integer NOT NULL,</span><br><span class="line">  last_access bigint NOT NULL,</span><br><span class="line">  app_name character varying(255),</span><br><span class="line">  session_data bytea,</span><br><span class="line">  CONSTRAINT tomcat_sessions_pkey PRIMARY KEY (session_id)</span><br><span class="line">);</span><br></pre></td></tr></table></figure>
+<p>Because we want this to be accessed fast by the name of application let’s index it. </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">CREATE INDEX app_name_index</span><br><span class="line">  ON tomcat_sessions</span><br><span class="line">  USING btree</span><br><span class="line">  (app_name);</span><br></pre></td></tr></table></figure>
+<p>Okay so now we have a place where we can store the session related information, let’s tell our tomcat instances about this.<br>Find the <code>$tomcat-root/conf/context.xml</code>, the <code>Manager</code> is by default commented out so that tomcat does the persistence of sessions on disk by default. Add this:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">&lt;Manager className=&quot;org.apache.catalina.session.PersistentManager&quot; processExpiresFrequency=&quot;3&quot; maxIdleBackup=&quot;1&quot; &gt;</span><br><span class="line">        &lt;Store className=&quot;org.apache.catalina.session.JDBCStore&quot;</span><br><span class="line">        	driverName=&quot;org.postgresql.Driver&quot;</span><br><span class="line">	        connectionURL=&quot;jdbc:postgresql://localhost:5432/websessions&quot;</span><br><span class="line">        	connectionName=&quot;postgres&quot; connectionPassword=&quot;root&quot;</span><br><span class="line">	        sessionAppCol=&quot;app_name&quot; sessionDataCol=&quot;session_data&quot; sessionIdCol=&quot;session_id&quot;</span><br><span class="line">        	sessionLastAccessedCol=&quot;last_access&quot; sessionMaxInactiveCol=&quot;max_inactive&quot;</span><br><span class="line">		sessionTable=&quot;tomcat_sessions&quot; sessionValidCol=&quot;valid_session&quot; /&gt;</span><br><span class="line">&lt;/Manager&gt;</span><br></pre></td></tr></table></figure>
+<p>Now because we are using PostgreSQL we need to add the JDBC libary to the <code>$tomcat-root/lib</code> folder.<br>Once we do that we are done.</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://absin1.github.io/2019/06/28/tomcat-session-persistence/" data-id="cjxalysmq0002aitnv5mujwf0" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
     <article id="post-apache2setup" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
     <a href="/blog/2019/06/24/apache2setup/" class="article-date">
@@ -100,7 +143,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://absin1.github.io/2019/06/24/apache2setup/" data-id="cjxajh0mv0000h6tnap125pz2" class="article-share-link">Share</a>
+      <a data-url="https://absin1.github.io/2019/06/24/apache2setup/" data-id="cjxalysml0000aitnvv5jnk1z" class="article-share-link">Share</a>
       
       
     </footer>
@@ -143,7 +186,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://absin1.github.io/2019/06/14/feature-development-methodology/" data-id="cjxajmb2h0000uatnqmivgr67" class="article-share-link">Share</a>
+      <a data-url="https://absin1.github.io/2019/06/14/feature-development-methodology/" data-id="cjxalysmp0001aitnxs83ifgw" class="article-share-link">Share</a>
       
       
     </footer>
@@ -186,7 +229,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://absin1.github.io/2019/06/05/software-architecture/" data-id="cjxajmb2m0001uatnmuti8oak" class="article-share-link">Share</a>
+      <a data-url="https://absin1.github.io/2019/06/05/software-architecture/" data-id="cjxalysmr0003aitnzipzv3qf" class="article-share-link">Share</a>
       
       
     </footer>
@@ -225,6 +268,10 @@
     <h3 class="widget-title">Recent Posts</h3>
     <div class="widget">
       <ul>
+        
+          <li>
+            <a href="/blog/2019/06/28/tomcat-session-persistence/">Tomcat Session Persistence</a>
+          </li>
         
           <li>
             <a href="/blog/2019/06/24/apache2setup/">Apache as a Load Balancer</a>
