@@ -14,7 +14,7 @@
 <meta property="og:site_name" content="Musings">
 <meta property="og:description" content="Session persistence is an interesting feature in Apache Tomcat. Using this we can potentially have multiple instances of tomcat running on different physical machines and they can share the sessions a">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2019-06-24T16:47:17.285Z">
+<meta property="og:updated_time" content="2019-06-24T16:54:05.919Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Tomcat Session Persistence">
 <meta name="twitter:description" content="Session persistence is an interesting feature in Apache Tomcat. Using this we can potentially have multiple instances of tomcat running on different physical machines and they can share the sessions a">
@@ -92,12 +92,12 @@
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">CREATE INDEX app_name_index</span><br><span class="line">  ON tomcat_sessions</span><br><span class="line">  USING btree</span><br><span class="line">  (app_name);</span><br></pre></td></tr></table></figure>
 <p>Okay so now we have a place where we can store the session related information, let’s tell our tomcat instances about this.<br>Find the <code>$tomcat-root/conf/context.xml</code>, the <code>Manager</code> is by default commented out so that tomcat does the persistence of sessions on disk by default. Add this:</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">&lt;Manager className=&quot;org.apache.catalina.session.PersistentManager&quot; processExpiresFrequency=&quot;3&quot; maxIdleBackup=&quot;1&quot; &gt;</span><br><span class="line">        &lt;Store className=&quot;org.apache.catalina.session.JDBCStore&quot;</span><br><span class="line">        	driverName=&quot;org.postgresql.Driver&quot;</span><br><span class="line">	        connectionURL=&quot;jdbc:postgresql://localhost:5432/websessions&quot;</span><br><span class="line">        	connectionName=&quot;postgres&quot; connectionPassword=&quot;root&quot;</span><br><span class="line">	        sessionAppCol=&quot;app_name&quot; sessionDataCol=&quot;session_data&quot; sessionIdCol=&quot;session_id&quot;</span><br><span class="line">        	sessionLastAccessedCol=&quot;last_access&quot; sessionMaxInactiveCol=&quot;max_inactive&quot;</span><br><span class="line">		sessionTable=&quot;tomcat_sessions&quot; sessionValidCol=&quot;valid_session&quot; /&gt;</span><br><span class="line">&lt;/Manager&gt;</span><br></pre></td></tr></table></figure>
-<p>Now because we are using PostgreSQL we need to add the JDBC libary to the <code>$tomcat-root/lib</code> folder.<br>Once we do that we are done.</p>
+<p>Now because we are using PostgreSQL we need to add the JDBC libary to the <code>$tomcat-root/lib</code> folder.<br>Once we do that we are done.<br><a href="https://tomcat.apache.org/tomcat-9.0-doc/config/cluster-manager.html" target="_blank" rel="noopener">cluster-manager</a><br><a href="https://tomcat.apache.org/tomcat-9.0-doc/config/manager.html" target="_blank" rel="noopener">manager</a><br><a href="https://tomcat.apache.org/tomcat-9.0-doc/manager-howto.html" target="_blank" rel="noopener">manager-howto</a><br><a href="https://tomcat.apache.org/tomcat-9.0-doc/cluster-howto.html" target="_blank" rel="noopener">cluster-howto</a><br><a href="http://localhost:8080/docs/config/context.html" target="_blank" rel="noopener">context</a></p>
 
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://absin1.github.io/2019/06/28/tomcat-session-persistence/" data-id="cjxalysmq0002aitnv5mujwf0" class="article-share-link">Share</a>
+      <a data-url="https://absin1.github.io/2019/06/28/tomcat-session-persistence/" data-id="cjzb39sox0006njtnm7k9x8ua" class="article-share-link">Share</a>
       
       
     </footer>
@@ -105,6 +105,15 @@
   
     
 <nav id="article-nav">
+  
+    <a href="/blog/2019/07/17/enabling-inside-sales/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          Enabling Inside Sales
+        
+      </div>
+    </a>
   
   
     <a href="/blog/2019/06/24/apache2setup/" id="article-nav-older" class="article-nav-link-wrap">
@@ -133,7 +142,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">Archives</h3>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/blog/archives/2019/06/">June 2019</a></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/blog/archives/2019/08/">August 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/blog/archives/2019/07/">July 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/blog/archives/2019/06/">June 2019</a></li></ul>
     </div>
   </div>
 
@@ -146,19 +155,23 @@
       <ul>
         
           <li>
+            <a href="/blog/2019/08/14/goaccess/">Goaccess</a>
+          </li>
+        
+          <li>
+            <a href="/blog/2019/07/18/enabling-inside-sales-tech/">The Tech</a>
+          </li>
+        
+          <li>
+            <a href="/blog/2019/07/17/enabling-inside-sales/">Enabling Inside Sales</a>
+          </li>
+        
+          <li>
             <a href="/blog/2019/06/28/tomcat-session-persistence/">Tomcat Session Persistence</a>
           </li>
         
           <li>
             <a href="/blog/2019/06/24/apache2setup/">Apache as a Load Balancer</a>
-          </li>
-        
-          <li>
-            <a href="/blog/2019/06/14/feature-development-methodology/">Feature Development Methodology</a>
-          </li>
-        
-          <li>
-            <a href="/blog/2019/06/05/software-architecture/">Software Architecture</a>
           </li>
         
       </ul>

@@ -62,6 +62,139 @@
       <div class="outer">
         <section id="main">
   
+    <article id="post-goaccess" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/blog/2019/08/14/goaccess/" class="article-date">
+  <time datetime="2019-08-14T09:48:06.000Z" itemprop="datePublished">2019-08-14</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/blog/2019/08/14/goaccess/">Goaccess</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h3 id="Server-Monitoring"><a href="#Server-Monitoring" class="headerlink" title="Server Monitoring"></a>Server Monitoring</h3><p>Have you ever wondered that watching logs of your apache2 can be a big headache. Then you are the audience for this post.<br>In order to do this we are going to use an open source tool called goAccess.</p>
+<h3 id="Install-goAccess"><a href="#Install-goAccess" class="headerlink" title="Install goAccess"></a>Install goAccess</h3><p>If you are luckily on Ubuntu you can just use <figure class="highlight plain"><figcaption><span>like so:</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">```</span><br><span class="line">sudo apt-get install goaccess</span><br></pre></td></tr></table></figure></p>
+<p>If you aren’t on ubuntu or face some issues you can refer goaccess’s <a href="https://goaccess.io/download#distro" target="_blank" rel="noopener">documentation</a>.</p>
+<h3 id="Configuring"><a href="#Configuring" class="headerlink" title="Configuring"></a>Configuring</h3><p>You can make a few changes to the configuration to avoid specifying everything while starting up. I am on apache2 virtual hosting multiple tomcat installations. You can refer <a href="../apache2setup">here</a> for more details on how to get that up and running.<br>Anyways in my setup I opened the configuration and did the following changes:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vi /usr/local/etc/goaccess/goaccess.conf</span><br></pre></td></tr></table></figure></p>
+<p>Uncomment the following lines:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">date-format %d/%b/%Y</span><br></pre></td></tr></table></figure></p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">log-format %h %^[%d:%t %^] &quot;%r&quot; %s %b &quot;%R&quot; &quot;%u&quot;</span><br></pre></td></tr></table></figure>
+<h3 id="Running"><a href="#Running" class="headerlink" title="Running"></a>Running</h3><p>You can run goaccess as a command line (not so cool) or on the browser (cooler) or on the browser with real-time updates (coolest).<br>Let’s go through these methods one by one:</p>
+<h4 id="Command-line"><a href="#Command-line" class="headerlink" title="Command line"></a>Command line</h4><p>Once the configuration is modified you can just run goaccess with the following command specifying the configuration file and the location of the log file. If you want to view old log files you can try specifying that:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">goaccess -p /usr/local/etc/goaccess/goaccess.conf /var/log/apache2/access.log</span><br></pre></td></tr></table></figure></p>
+<h4 id="Browser"><a href="#Browser" class="headerlink" title="Browser"></a>Browser</h4><p>In order to see these details on a browser you can generate a static file with the following command:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">goaccess -p /usr/local/etc/goaccess/goaccess.conf /var/log/apache2/access.log -a -o /root/vv/report.html</span><br></pre></td></tr></table></figure></p>
+<p>You can then serve this report.html with a simple python one-liner:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">python3 -m http.server 8000</span><br></pre></td></tr></table></figure></p>
+<h4 id="Browser-with-realtime"><a href="#Browser-with-realtime" class="headerlink" title="Browser with realtime"></a>Browser with realtime</h4><p>In order to see the same cool view that you get on the browser but with real-time updates you can try the following command:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">goaccess -p /usr/local/etc/goaccess/goaccess.conf /var/log/apache2/access.log -o /root/vv/report.html --real-time-html</span><br></pre></td></tr></table></figure></p>
+<p>You can then serve the same html using any server like so:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">python3 -m http.server 8000</span><br></pre></td></tr></table></figure></p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://absin1.github.io/2019/08/14/goaccess/" data-id="cjzb39sou0003njtnecbe7vml" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-enabling-inside-sales-tech" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/blog/2019/07/18/enabling-inside-sales-tech/" class="article-date">
+  <time datetime="2019-07-18T12:23:57.000Z" itemprop="datePublished">2019-07-18</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/blog/2019/07/18/enabling-inside-sales-tech/">The Tech</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>How are we technically achieving <a href="/blog/2019/07/17/enabling-inside-sales">this</a> vision?</p>
+<p>A contextual streaming speech recognition engine with transcribing millions of conversations concurrently with a latency of milliseconds. We experiment with various architectures including TDNN+LSTM, RNN-T, CTC and employ the ones that makes most sense based on the use case. We also employ language model and trie enriched with custom vocabulary to ensure high accuracy of our ASR system.</p>
+<p>We use CNNs with attention mechanism to perform emotion recognition and while doing this we use both the text and speech signals to gain an accurate insight into the emotional state of the conversation.</p>
+<p>We remember all the conversations that have ever happened successful or otherwise in graph-structured bidirectional LSTMs. Often there is information lurking in the unstructured texts that reside in all the training and product spec documents. We encash all that with KGCNs (Knowledge Graph Convolutional Network) and try to factor this into equation too.</p>
+<p>We feed all this information into a Reinforcement Learning conversation engine which is DNDTs (Deep Neural Decision Trees).</p>
+<p>With this abstraction we have ample control over how the conversation flows and how we can tweak it up for specific use cases while maintaining inherent learnability in the system from just conversational data.</p>
+<p>Of course to do all this we  integrate with almost all the dialers that a small business to an enterprise would use. A robust architecture ensures that we are able to seamlessly integrate into most of the CRMs that we find in the wild.</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://absin1.github.io/2019/07/18/enabling-inside-sales-tech/" data-id="cjzb39sor0001njtn8yc9s3ii" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
+    <article id="post-enabling-inside-sales" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/blog/2019/07/17/enabling-inside-sales/" class="article-date">
+  <time datetime="2019-07-17T12:08:17.000Z" itemprop="datePublished">2019-07-17</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/blog/2019/07/17/enabling-inside-sales/">Enabling Inside Sales</a>
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>Over the past decade there has been an immense movement to inside sales as a dominant model. Sales reps in SaaS companies are now wholly engaged in this model. We are thinking about enabling inside sales agents in ways that help them achieve their maximum potential.</p>
+<p>We believe that objection handling is one of the crucial skills that enables a fuitful sales conversation. With this vision we are creating a tool where the tried and tested methods of a successful sales agent can be shared amongst the cohort.</p>
+<p>Armed with best practices your sales agents are now improving as they are talking to more prospects. Gone are the days when you had to review sales conversations to find out where an agent is going wrong. You can let the accumulated conversational wealth that you already posses do all this for you.</p>
+<p>And if at any point you feel that the accumulated successful conversational wealth isn’t enough we provide hooks to take things into your hands so to speak. Not to mention we also know what your agents are selling by hooking into your knowledge sources.</p>
+<p>Additionally we also know who they are trying to sell to by peeking into your CRM to find out more information on the prospect. We let you define customer personas which can then be put into play. Imagine your sales agents getting the right cues when they are talking to a Vice President against when they are talking to a Floor Manager. Your agents now know what features of your product makes sense to which customer personas.</p>
+<p>Not to mention all of this comes with automatic updates and integration of various productivity softwares your inside sales agents might be using.</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://absin1.github.io/2019/07/17/enabling-inside-sales/" data-id="cjzb39sov0004njtndy516sdn" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+</article>
+
+
+  
     <article id="post-tomcat-session-persistence" class="article article-type-post" itemscope itemprop="blogPost">
   <div class="article-meta">
     <a href="/blog/2019/06/28/tomcat-session-persistence/" class="article-date">
@@ -90,12 +223,12 @@
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">CREATE INDEX app_name_index</span><br><span class="line">  ON tomcat_sessions</span><br><span class="line">  USING btree</span><br><span class="line">  (app_name);</span><br></pre></td></tr></table></figure>
 <p>Okay so now we have a place where we can store the session related information, let’s tell our tomcat instances about this.<br>Find the <code>$tomcat-root/conf/context.xml</code>, the <code>Manager</code> is by default commented out so that tomcat does the persistence of sessions on disk by default. Add this:</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">&lt;Manager className=&quot;org.apache.catalina.session.PersistentManager&quot; processExpiresFrequency=&quot;3&quot; maxIdleBackup=&quot;1&quot; &gt;</span><br><span class="line">        &lt;Store className=&quot;org.apache.catalina.session.JDBCStore&quot;</span><br><span class="line">        	driverName=&quot;org.postgresql.Driver&quot;</span><br><span class="line">	        connectionURL=&quot;jdbc:postgresql://localhost:5432/websessions&quot;</span><br><span class="line">        	connectionName=&quot;postgres&quot; connectionPassword=&quot;root&quot;</span><br><span class="line">	        sessionAppCol=&quot;app_name&quot; sessionDataCol=&quot;session_data&quot; sessionIdCol=&quot;session_id&quot;</span><br><span class="line">        	sessionLastAccessedCol=&quot;last_access&quot; sessionMaxInactiveCol=&quot;max_inactive&quot;</span><br><span class="line">		sessionTable=&quot;tomcat_sessions&quot; sessionValidCol=&quot;valid_session&quot; /&gt;</span><br><span class="line">&lt;/Manager&gt;</span><br></pre></td></tr></table></figure>
-<p>Now because we are using PostgreSQL we need to add the JDBC libary to the <code>$tomcat-root/lib</code> folder.<br>Once we do that we are done.</p>
+<p>Now because we are using PostgreSQL we need to add the JDBC libary to the <code>$tomcat-root/lib</code> folder.<br>Once we do that we are done.<br><a href="https://tomcat.apache.org/tomcat-9.0-doc/config/cluster-manager.html" target="_blank" rel="noopener">cluster-manager</a><br><a href="https://tomcat.apache.org/tomcat-9.0-doc/config/manager.html" target="_blank" rel="noopener">manager</a><br><a href="https://tomcat.apache.org/tomcat-9.0-doc/manager-howto.html" target="_blank" rel="noopener">manager-howto</a><br><a href="https://tomcat.apache.org/tomcat-9.0-doc/cluster-howto.html" target="_blank" rel="noopener">cluster-howto</a><br><a href="http://localhost:8080/docs/config/context.html" target="_blank" rel="noopener">context</a></p>
 
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://absin1.github.io/2019/06/28/tomcat-session-persistence/" data-id="cjxalysmq0002aitnv5mujwf0" class="article-share-link">Share</a>
+      <a data-url="https://absin1.github.io/2019/06/28/tomcat-session-persistence/" data-id="cjzb39sox0006njtnm7k9x8ua" class="article-share-link">Share</a>
       
       
     </footer>
@@ -128,22 +261,30 @@
     <div class="article-entry" itemprop="articleBody">
       
         <p>Let’s first install apache server<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo apt-get install apache2</span><br></pre></td></tr></table></figure></p>
-<p>First thing we are going to do is enable SSL<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo a2enmod ssl</span><br></pre></td></tr></table></figure></p>
-<p>Let’s take a default configuration generated by apache2 and modify it, to create out own virtual host.<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cp /etc/apache2/sites-available/default-ssl.conf /etc/apache2/sites-available/ind.talentify.in.conf</span><br></pre></td></tr></table></figure></p>
+<p>First thing we are going to do is enable SSL.<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo a2enmod ssl</span><br></pre></td></tr></table></figure></p>
+<p>Let’s take a default configuration generated by apache2 and modify it, to create out own virtual host.<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mv /etc/apache2/sites-available/default-ssl.conf /etc/apache2/sites-available/ind.talentify.in-ssl.conf</span><br></pre></td></tr></table></figure></p>
 <p>Time to make SSL chained and validated<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vi /etc/apache2/sites-available/ind.talentify.in.conf</span><br></pre></td></tr></table></figure></p>
 <p>Find these keys and put these values<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">SSLCertificateFile      /root/vv/talentify.crt</span><br><span class="line">SSLCertificateKeyFile  /root/vv/my_store.key</span><br><span class="line">SSLCertificateChainFile /root/vv/Root-R1.crt</span><br></pre></td></tr></table></figure></p>
-<p>Now we are done configuring the basic SSL. Let’s enable this virtual host.<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo a2ensite ind.talentify.in</span><br></pre></td></tr></table></figure></p>
+<p>Now we are done configuring the basic SSL. Let’s enable this virtual host.<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sudo a2ensite ind.talentify.in-ssl</span><br></pre></td></tr></table></figure></p>
 <p>Restart and then check the DNS with SSL<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">systemctl reload apache2</span><br></pre></td></tr></table></figure></p>
-<p><a href="https://ind.talentify.in" target="_blank" rel="noopener">https://ind.talentify.in</a> should be working now</p>
+<p><a href="https://ind.talentify.in" target="_blank" rel="noopener">https://ind.talentify.in</a> should be working now<br>But what happens if someone tries to open <a href="http://ind.talentify.in" target="_blank" rel="noopener">http://ind.talentify.in</a>; because we haven’t configured the <code>000-default.conf</code>, they will see the default apache2 welcome page. We can change this behaviour to redirection to the secure site.<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mv 000-default.conf ind.talentify.in.conf</span><br></pre></td></tr></table></figure></p>
+<p>Then, let’s edit this to enable redirection to https:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vi ind.talentify.in.conf</span><br></pre></td></tr></table></figure></p>
+<p>And add this line to the end:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Redirect permanent / https://ind.talentify.in/</span><br></pre></td></tr></table></figure></p>
+<p>And now opening <a href="http://ind.talentify.in" target="_blank" rel="noopener">http://ind.talentify.in</a> will take us to <a href="https://ind.talentify.in" target="_blank" rel="noopener">https://ind.talentify.in</a>. But now let’s put a java application (our backend) behind this apache2.</p>
 <h2 id="Reverse-Proxy"><a href="#Reverse-Proxy" class="headerlink" title="Reverse Proxy"></a>Reverse Proxy</h2><p>(Official Doc link)[<a href="https://httpd.apache.org/docs/2.4/howto/reverse_proxy.html]" target="_blank" rel="noopener">https://httpd.apache.org/docs/2.4/howto/reverse_proxy.html]</a><br>(Also good)[<a href="https://www.digitalocean.com/community/tutorials/how-to-use-apache-as-a-reverse-proxy-with-mod_proxy-on-ubuntu-16-04]" target="_blank" rel="noopener">https://www.digitalocean.com/community/tutorials/how-to-use-apache-as-a-reverse-proxy-with-mod_proxy-on-ubuntu-16-04]</a><br>Let’s first enable all the modules required for Load Balancing and Reverse Proxying<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">sudo a2enmod proxy</span><br><span class="line">sudo a2enmod proxy_http</span><br><span class="line">sudo a2enmod proxy_balancer</span><br><span class="line">sudo a2enmod lbmethod_byrequests</span><br><span class="line">sudo a2enmod lbmethod_bytraffic</span><br></pre></td></tr></table></figure></p>
-<p>Let;s add requisite configuration, you should have these servers up and running<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vi /etc/apache2/sites-available/ind.talentify.in.conf</span><br></pre></td></tr></table></figure></p>
+<p>Let’s add requisite configuration, you should have these servers up and running<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vi /etc/apache2/sites-available/ind.talentify.in.conf</span><br></pre></td></tr></table></figure></p>
 <p>We define a proxy with balancer and then tell apache to use the same. We also want the second one to take most of the load, so we give a load factor of 3.<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">&lt;Proxy balancer://backend&gt;</span><br><span class="line">           BalancerMember http://db.talentify.in</span><br><span class="line">           BalancerMember http://ind.talentify.in:8080 loadfactor=3 timeout=1</span><br><span class="line">           ProxySet lbmethod=byrequests</span><br><span class="line">       &lt;/Proxy&gt;</span><br><span class="line">       ProxyPass &quot;/&quot;  &quot;balancer://backend/&quot;</span><br><span class="line">       ProxyPassReverse &quot;/&quot;  &quot;balancer://backend/&quot;</span><br></pre></td></tr></table></figure></p>
-<p>Voila!!!</p>
+<p>The only problem in this setup is that if the underlying apache tomcat, which is being reverse proxied by apache2, tries to redirect (302), then the host name which will be used will get drawn from the underlying application and this may cause a number of problems. Inorder to avoid this, add this line before ProxyPass<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ProxyPreserveHost On</span><br></pre></td></tr></table></figure></p>
+<p><a href="https://stackoverflow.com/questions/18333252/sending-redirect-in-tomcat-web-application-behind-a-apache-2-proxy-mod-proxy" target="_blank" rel="noopener">Reference</a></p>
+<h2 id="Sticky-Sessions"><a href="#Sticky-Sessions" class="headerlink" title="Sticky Sessions"></a>Sticky Sessions</h2><p>Now, the only problem here is that in a monolithic (JSP kind of) application we won’t be able to share sessions. A workaround here can be to offload session persistence in application server to tomcat. This can work in a pure REST microservice environment because there is no contextuality between the subsequent requests. But in a monolithic application this can lead to some problems.<br>Which means session persistence in either DB or Memcache or Redis can still bring in irregular experiences when the user logs in for the first time.<br>A solution to this can be to have apache2 dictate sticky sessions. What do we make the sessions stick upon? We have JSESSIONID as a candidate however because JSESSIONIDs can get assigned for every request made to the worker, this is unreliable, an efficient solution to this is to let apache2 decide session stickiness using routes.<br>We will need headers module for this:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">a2enmod headers</span><br></pre></td></tr></table></figure></p>
+<p>Well explained <a href="https://httpd.apache.org/docs/2.4/mod/mod_proxy_balancer.html" target="_blank" rel="noopener">here</a>. Taking this into account, our final configuration looks like this:<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">Header add Set-Cookie &quot;ROUTEID=.%&#123;BALANCER_WORKER_ROUTE&#125;e; path=/&quot; env=BALANCER_ROUTE_CHANGED</span><br><span class="line">              &lt;Proxy balancer://backend&gt;</span><br><span class="line">                  #BalancerMember http://db.talentify.in</span><br><span class="line">                  BalancerMember http://ind.talentify.in:7080 route=1</span><br><span class="line">                  BalancerMember http://ind.talentify.in:8080 route=2</span><br><span class="line">                  ProxySet lbmethod=bytraffic</span><br><span class="line">                  ProxySet stickysession=ROUTEID</span><br><span class="line">              &lt;/Proxy&gt;</span><br><span class="line">              ProxyPreserveHost On</span><br><span class="line">              ProxyPass &quot;/&quot;  &quot;balancer://backend/&quot;</span><br><span class="line">              ProxyPassReverse &quot;/&quot;  &quot;balancer://backend/&quot;</span><br></pre></td></tr></table></figure></p>
+<p>What’s of importance to check here is what if one of the application server fails?<br>If a node fails then the load balancer automatically switches the incoming load to the other node. Good apache2.<br>What happens when the failed node comes back up?<br>Strangely enough what I am seeing so far is that apache2 has to be restarted for the load balance health check to rerun and the first node to be considered as an active candidate.</p>
+<h2 id="Websocket"><a href="#Websocket" class="headerlink" title="Websocket"></a>Websocket</h2><p>Voila!!!</p>
 
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://absin1.github.io/2019/06/24/apache2setup/" data-id="cjxalysml0000aitnvv5jnk1z" class="article-share-link">Share</a>
+      <a data-url="https://absin1.github.io/2019/06/24/apache2setup/" data-id="cjzb39son0000njtni0idk9sm" class="article-share-link">Share</a>
       
       
     </footer>
@@ -186,7 +327,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://absin1.github.io/2019/06/14/feature-development-methodology/" data-id="cjxalysmp0001aitnxs83ifgw" class="article-share-link">Share</a>
+      <a data-url="https://absin1.github.io/2019/06/14/feature-development-methodology/" data-id="cjzb39sot0002njtn8omxdh5g" class="article-share-link">Share</a>
       
       
     </footer>
@@ -229,7 +370,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://absin1.github.io/2019/06/05/software-architecture/" data-id="cjxalysmr0003aitnzipzv3qf" class="article-share-link">Share</a>
+      <a data-url="https://absin1.github.io/2019/06/05/software-architecture/" data-id="cjzb39sow0005njtnvfqyyt2b" class="article-share-link">Share</a>
       
       
     </footer>
@@ -257,7 +398,7 @@
   <div class="widget-wrap">
     <h3 class="widget-title">Archives</h3>
     <div class="widget">
-      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/blog/archives/2019/06/">June 2019</a></li></ul>
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/blog/archives/2019/08/">August 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/blog/archives/2019/07/">July 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/blog/archives/2019/06/">June 2019</a></li></ul>
     </div>
   </div>
 
@@ -270,19 +411,23 @@
       <ul>
         
           <li>
+            <a href="/blog/2019/08/14/goaccess/">Goaccess</a>
+          </li>
+        
+          <li>
+            <a href="/blog/2019/07/18/enabling-inside-sales-tech/">The Tech</a>
+          </li>
+        
+          <li>
+            <a href="/blog/2019/07/17/enabling-inside-sales/">Enabling Inside Sales</a>
+          </li>
+        
+          <li>
             <a href="/blog/2019/06/28/tomcat-session-persistence/">Tomcat Session Persistence</a>
           </li>
         
           <li>
             <a href="/blog/2019/06/24/apache2setup/">Apache as a Load Balancer</a>
-          </li>
-        
-          <li>
-            <a href="/blog/2019/06/14/feature-development-methodology/">Feature Development Methodology</a>
-          </li>
-        
-          <li>
-            <a href="/blog/2019/06/05/software-architecture/">Software Architecture</a>
           </li>
         
       </ul>

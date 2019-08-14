@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html>
+<head><meta name="generator" content="Hexo 3.8.0">
+  <meta charset="utf-8">
+  
+
+  
+  <title>The Tech | Musings</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="How are we technically achieving this vision? A contextual streaming speech recognition engine with transcribing millions of conversations concurrently with a latency of milliseconds. We experiment wi">
+<meta property="og:type" content="article">
+<meta property="og:title" content="The Tech">
+<meta property="og:url" content="https://absin1.github.io/2019/07/18/enabling-inside-sales-tech/index.html">
+<meta property="og:site_name" content="Musings">
+<meta property="og:description" content="How are we technically achieving this vision? A contextual streaming speech recognition engine with transcribing millions of conversations concurrently with a latency of milliseconds. We experiment wi">
+<meta property="og:locale" content="default">
+<meta property="og:updated_time" content="2019-07-18T13:42:20.560Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="The Tech">
+<meta name="twitter:description" content="How are we technically achieving this vision? A contextual streaming speech recognition engine with transcribing millions of conversations concurrently with a latency of milliseconds. We experiment wi">
+  
+    <link rel="alternate" href="/blog/atom.xml" title="Musings" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  
+    <link href="//fonts.googleapis.com/css?family=Source+Code+Pro" rel="stylesheet" type="text/css">
+  
+  <link rel="stylesheet" href="/blog/css/style.css">
+</head>
+</html>
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/blog/" id="logo">Musings</a>
+      </h1>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/blog/">Home</a>
+        
+          <a class="main-nav-link" href="/blog/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/blog/atom.xml" title="RSS Feed"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="Search"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="Search"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="https://absin1.github.io"></form>
+      </div>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-enabling-inside-sales-tech" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    <a href="/blog/2019/07/18/enabling-inside-sales-tech/" class="article-date">
+  <time datetime="2019-07-18T12:23:57.000Z" itemprop="datePublished">2019-07-18</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      The Tech
+    </h1>
+  
+
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>How are we technically achieving <a href="/blog/2019/07/17/enabling-inside-sales">this</a> vision?</p>
+<p>A contextual streaming speech recognition engine with transcribing millions of conversations concurrently with a latency of milliseconds. We experiment with various architectures including TDNN+LSTM, RNN-T, CTC and employ the ones that makes most sense based on the use case. We also employ language model and trie enriched with custom vocabulary to ensure high accuracy of our ASR system.</p>
+<p>We use CNNs with attention mechanism to perform emotion recognition and while doing this we use both the text and speech signals to gain an accurate insight into the emotional state of the conversation.</p>
+<p>We remember all the conversations that have ever happened successful or otherwise in graph-structured bidirectional LSTMs. Often there is information lurking in the unstructured texts that reside in all the training and product spec documents. We encash all that with KGCNs (Knowledge Graph Convolutional Network) and try to factor this into equation too.</p>
+<p>We feed all this information into a Reinforcement Learning conversation engine which is DNDTs (Deep Neural Decision Trees).</p>
+<p>With this abstraction we have ample control over how the conversation flows and how we can tweak it up for specific use cases while maintaining inherent learnability in the system from just conversational data.</p>
+<p>Of course to do all this we  integrate with almost all the dialers that a small business to an enterprise would use. A robust architecture ensures that we are able to seamlessly integrate into most of the CRMs that we find in the wild.</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://absin1.github.io/2019/07/18/enabling-inside-sales-tech/" data-id="cjzb39sor0001njtn8yc9s3ii" class="article-share-link">Share</a>
+      
+      
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/blog/2019/08/14/goaccess/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          Goaccess
+        
+      </div>
+    </a>
+  
+  
+    <a href="/blog/2019/07/17/enabling-inside-sales/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">Enabling Inside Sales</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+
+  
+    
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Archives</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/blog/archives/2019/08/">August 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/blog/archives/2019/07/">July 2019</a></li><li class="archive-list-item"><a class="archive-list-link" href="/blog/archives/2019/06/">June 2019</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">Recent Posts</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/blog/2019/08/14/goaccess/">Goaccess</a>
+          </li>
+        
+          <li>
+            <a href="/blog/2019/07/18/enabling-inside-sales-tech/">The Tech</a>
+          </li>
+        
+          <li>
+            <a href="/blog/2019/07/17/enabling-inside-sales/">Enabling Inside Sales</a>
+          </li>
+        
+          <li>
+            <a href="/blog/2019/06/28/tomcat-session-persistence/">Tomcat Session Persistence</a>
+          </li>
+        
+          <li>
+            <a href="/blog/2019/06/24/apache2setup/">Apache as a Load Balancer</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      &copy; 2019 absin<br>
+      Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/blog/" class="mobile-nav-link">Home</a>
+  
+    <a href="/blog/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/blog/fancybox/jquery.fancybox.css">
+  <script src="/blog/fancybox/jquery.fancybox.pack.js"></script>
+
+
+<script src="/blog/js/script.js"></script>
+
+
+
+  </div>
+</body>
+</html>
